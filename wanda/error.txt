@@ -1,0 +1,8 @@
+/usr/local/lib/python3.9/dist-packages/torch/torch_version.py:3: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import packaging  # type: ignore[attr-defined]
+/usr/local/lib/python3.9/dist-packages/huggingface_hub/file_download.py:942: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:13<00:39, 13.18s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:26<00:26, 13.15s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:40<00:13, 13.56s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:43<00:00,  9.45s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:43<00:00, 10.87s/it]
+/usr/local/lib/python3.9/dist-packages/huggingface_hub/file_download.py:942: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.

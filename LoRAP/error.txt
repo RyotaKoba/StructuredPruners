@@ -1,0 +1,46 @@
+2025-11-04 20:51:18,993 - numexpr.utils - INFO - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 16.
+2025-11-04 20:51:19,023 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-11-04 20:51:29,217 - datasets - INFO - PyTorch version 2.7.1+cu118 available.
+2025-11-04 20:51:32,632 - utils.log - INFO - Start print log
+2025-11-04 20:51:32,635 - utils.log - INFO - torch:2.7.1+cu118
+2025-11-04 20:51:32,640 - utils.log - INFO - transformers:4.57.1
+2025-11-04 20:51:32,641 - utils.log - INFO - accelerate:1.11.0
+2025-11-04 20:51:32,642 - utils.log - INFO - Namespace(model='meta-llama/Meta-Llama-3-8B', seed=0, dataset='wikitext2', nsamples=128, calibration_seqlen=128, eval_seqlen=128, sparsity_ratio=0.5, cache_dir='llm_weights', eval_results='result/eval', save_model='pruned_model/lorap_0.2/', para_allocate=3.0, mlp_compress_method='prune', mlp_least_save_ratio=0.01, real_com=True, deco_method='AWSVD', sublayer='mlp')
+2025-11-04 20:51:35,137 - utils.log - INFO - tokenizer load finished
+`torch_dtype` is deprecated! Use `dtype` instead!
+/usr/local/lib/python3.10/dist-packages/torch/cuda/__init__.py:287: UserWarning: 
+NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition with CUDA capability sm_120 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_50 sm_60 sm_70 sm_75 sm_80 sm_86 sm_37 sm_90.
+If you want to use the NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+
+  warnings.warn(
+2025-11-04 20:51:37,412 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:54<?, ?it/s]
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/usr/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/kobayashi/Pruning/LoRAP/main.py", line 12, in <module>
+    model,tokenizer,args=get_model()
+  File "/home/kobayashi/Pruning/LoRAP/utils/model_load.py", line 37, in get_model
+    model = AutoModelForCausalLM.from_pretrained(args.model,device_map="auto", torch_dtype=torch.float16, low_cpu_mem_usage=True, rope_scaling=None)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/auto/auto_factory.py", line 604, in from_pretrained
+    return model_class.from_pretrained(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/modeling_utils.py", line 277, in _wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/modeling_utils.py", line 5048, in from_pretrained
+    ) = cls._load_pretrained_model(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/modeling_utils.py", line 5468, in _load_pretrained_model
+    _error_msgs, disk_offload_index = load_shard_file(args)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/modeling_utils.py", line 843, in load_shard_file
+    disk_offload_index = _load_state_dict_into_meta_model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/modeling_utils.py", line 750, in _load_state_dict_into_meta_model
+    param = param.to(casting_dtype)
+RuntimeError: CUDA error: no kernel image is available for execution on the device
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

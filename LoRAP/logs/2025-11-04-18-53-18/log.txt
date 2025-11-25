@@ -1,0 +1,8 @@
+2025-11-04 18:53:35,262 - numexpr.utils - INFO - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 16.
+2025-11-04 18:53:35,263 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-11-04 18:53:37,999 - datasets - INFO - PyTorch version 2.7.1+cu118 available.
+2025-11-04 18:53:39,301 - utils.log - INFO - Start print log
+2025-11-04 18:53:39,304 - utils.log - INFO - torch:2.7.1+cu118
+2025-11-04 18:53:39,314 - utils.log - INFO - transformers:4.57.1
+2025-11-04 18:53:39,316 - utils.log - INFO - accelerate:1.11.0
+2025-11-04 18:53:39,319 - utils.log - INFO - Namespace(model='meta-llama/Meta-Llama-3-8B', seed=0, dataset='wikitext2', nsamples=128, calibration_seqlen=128, eval_seqlen=128, sparsity_ratio=0.5, cache_dir='llm_weights', eval_results='result/eval', save_model='pruned_model/lorap_0.2/', para_allocate=3.0, mlp_compress_method='prune', mlp_least_save_ratio=0.01, real_com=True, deco_method='AWSVD', sublayer='mlp')

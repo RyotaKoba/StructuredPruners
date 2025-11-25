@@ -1,0 +1,66 @@
+Selected Tasks: ['winogrande', 'arc_easy', 'arc_challenge', 'hellaswag', 'piqa']
+Load from Pruned Model: ./prune_log/llama3_prune/pytorch_model.bin
+Running loglikelihood requests
+{
+  "results": {
+    "winogrande": {
+      "acc": 0.5343330702446725,
+      "acc_stderr": 0.014019317531542567
+    },
+    "arc_easy": {
+      "acc": 0.4255050505050505,
+      "acc_stderr": 0.010145271182591026,
+      "acc_norm": 0.3947811447811448,
+      "acc_norm_stderr": 0.010030038935883568
+    },
+    "arc_challenge": {
+      "acc": 0.2090443686006826,
+      "acc_stderr": 0.011882746987406453,
+      "acc_norm": 0.24914675767918087,
+      "acc_norm_stderr": 0.012639407111926433
+    },
+    "hellaswag": {
+      "acc": 0.31836287592113127,
+      "acc_stderr": 0.00464889078758167,
+      "acc_norm": 0.3828918542123083,
+      "acc_norm_stderr": 0.004850988215167546
+    },
+    "piqa": {
+      "acc": 0.6583242655059848,
+      "acc_stderr": 0.011065535143841539,
+      "acc_norm": 0.6583242655059848,
+      "acc_norm_stderr": 0.011065535143841525
+    }
+  },
+  "versions": {
+    "winogrande": 0,
+    "arc_easy": 0,
+    "arc_challenge": 0,
+    "hellaswag": 0,
+    "piqa": 0
+  },
+  "config": {
+    "model": "hf-causal-experimental",
+    "model_args": "checkpoint=./prune_log/llama3_prune/pytorch_model.bin,config_pretrained=meta-llama/Meta-Llama-3-8B,trust_remote_code=True",
+    "num_fewshot": 0,
+    "batch_size": null,
+    "device": null,
+    "no_cache": true,
+    "limit": null,
+    "bootstrap_iters": 100000,
+    "description_dict": {}
+  }
+}
+hf-causal-experimental (checkpoint=./prune_log/llama3_prune/pytorch_model.bin,config_pretrained=meta-llama/Meta-Llama-3-8B,trust_remote_code=True), limit: None, provide_description: False, num_fewshot: 0, batch_size: None
+|    Task     |Version| Metric |Value |   |Stderr|
+|-------------|------:|--------|-----:|---|-----:|
+|winogrande   |      0|acc     |0.5343|±  |0.0140|
+|arc_easy     |      0|acc     |0.4255|±  |0.0101|
+|             |       |acc_norm|0.3948|±  |0.0100|
+|arc_challenge|      0|acc     |0.2090|±  |0.0119|
+|             |       |acc_norm|0.2491|±  |0.0126|
+|hellaswag    |      0|acc     |0.3184|±  |0.0046|
+|             |       |acc_norm|0.3829|±  |0.0049|
+|piqa         |      0|acc     |0.6583|±  |0.0111|
+|             |       |acc_norm|0.6583|±  |0.0111|
+

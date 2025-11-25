@@ -1,0 +1,7 @@
+2025-11-04 18:52:42,715 - numexpr.utils - INFO - Note: NumExpr detected 64 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 16.
+2025-11-04 18:52:42,716 - numexpr.utils - INFO - NumExpr defaulting to 16 threads.
+2025-11-04 18:52:45,456 - datasets - INFO - PyTorch version 2.7.1+cu118 available.
+2025-11-04 18:52:46,729 - utils.log - INFO - Start print log
+2025-11-04 18:52:46,732 - utils.log - INFO - torch:2.7.1+cu118
+2025-11-04 18:52:46,741 - utils.log - INFO - transformers:4.57.1
+2025-11-04 18:52:46,743 - utils.log - INFO - accelerate:1.11.0

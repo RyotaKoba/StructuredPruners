@@ -1,0 +1,78 @@
+Bootstrap: docker
+From: nvidia/cuda:11.3.1-cudnn8-devel-ubuntu20.04
+
+%post
+    # タイムゾーン設定（インタラクティブプロンプトを回避）
+    export DEBIAN_FRONTEND=noninteractive
+    ln -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+    
+    # 基本パッケージの更新とインストール
+    apt-get update
+    apt-get install -y \
+        python3.9 \
+        python3-pip \
+        python3.9-dev \
+        git \
+        wget \
+        curl \
+        vim \
+        build-essential
+    
+    # python3をデフォルトに設定
+    update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1
+    update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+    
+    # pipとsetuptoolsを最新版にアップグレード（バージョン競合を回避）
+    python -m pip install --upgrade pip setuptools wheel
+    
+    # PyTorchとCUDAツールキット関連のインストール
+    python -m pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio==0.10.1+cu113 \
+        -f https://download.pytorch.org/whl/cu113/torch_stable.html
+    
+
+    
+    # その他のライブラリのインストール
+    python -m pip install transformers==4.40.0
+    python -m pip install datasets==2.18.0
+    python -m pip install wandb
+    python -m pip install sentencepiece
+    python -m pip install accelerate==0.26.0
+    # pyarrowをインストール（datasetsの依存関係）
+    python -m pip install pyarrow==8.0.0
+    python -m pip install "numpy<1.24"
+    python -m pip install fsspec==2023.1.0
+
+    # キャッシュのクリーンアップ
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+    python -m pip cache purge
+
+%environment
+    export LANG=C.UTF-8
+    export LC_ALL=C.UTF-8
+    export PYTHONIOENCODING=utf-8
+    export CUDA_HOME=/usr/local/cuda-11.3
+    export PATH=$CUDA_HOME/bin:$PATH
+    export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+
+%runscript
+    echo "PyTorch 1.10.1 (CUDA 11.3) 環境"
+    echo "利用可能なライブラリ:"
+    echo "  - PyTorch, torchvision, torchaudio"
+    echo "  - transformers, datasets"
+    echo "  - wandb, sentencepiece, accelerate"
+    exec /bin/bash "$@"
+
+%labels
+    Author your-name
+    Version 1.0
+    Description PyTorch 1.10.1 with CUDA 11.3 and Transformers
+
+%help
+    このコンテナにはPyTorch 1.10.1とCUDA 11.3、
+    transformers、datasetsなどの機械学習ライブラリが含まれています。
+    
+    使用例:
+        singularity build pytorch.sif pytorch.def
+        singularity shell --nv pytorch.sif
+        singularity exec --nv pytorch.sif python your_script.py

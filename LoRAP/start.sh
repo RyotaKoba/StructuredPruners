@@ -1,0 +1,11 @@
+python3 -m main.py \
+--model "meta-llama/Meta-Llama-3-8B" \
+--dataset wikitext2 \
+--sparsity_ratio 0.5 \
+--para_allocate 3 \
+--mlp_compress_method prune \
+--calibration_seqlen 128 \
+--deco_method AWSVD \
+--sublayer mlp \
+--save_model pruned_model/lorap_0.2/ \
+--real_com False 
