@@ -16,8 +16,10 @@ def get_wikitext2(seq_len, tokenizer):
     return traindata, testdata
 
 def get_ptb(seq_len, tokenizer):
-    traindata = load_dataset('ptb_text_only', 'penn_treebank', split='train',trust_remote_code=True)
-    valdata = load_dataset('ptb_text_only', 'penn_treebank', split='validation',trust_remote_code=True)
+    # traindata = load_dataset('ptb_text_only', 'penn_treebank', split='train',trust_remote_code=True)
+    traindata = load_dataset('ptb-text-only/ptb_text_only', 'penn_treebank', split='train')
+    # valdata = load_dataset('ptb_text_only', 'penn_treebank', split='validation',trust_remote_code=True)
+    valdata = load_dataset('ptb-text-only/ptb_text_only', 'penn_treebank', split='validation')
     return traindata, valdata
 
 class IndexDataset(Dataset):
