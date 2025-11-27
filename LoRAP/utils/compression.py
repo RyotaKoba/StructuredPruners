@@ -66,7 +66,44 @@ def lorap(args, model, tokenizer, device):
             handles.append(subset[name].register_forward_hook(add_batch(name)))
         for j in range(args.nsamples):
             with torch.no_grad():
-                outs[j] = layer(inps[j].unsqueeze(0), attention_mask=attention_mask, position_ids=position_ids)[0]
+                rotary_impl = None
+                for m in model.modules():
+                    if hasattr(m, "rotary_emb"):
+                        rotary_impl = m.rotary_emb
+                        break
+                if rotary_impl is None:
+                    raise RuntimeError("rotary_impl not found on model")
+
+                # prepare tensors
+                x = inps[j].unsqueeze(0)                      # (1, seq_len, hidden)
+                seq_len = x.shape[1]
+                position_ids = torch.arange(seq_len, device=x.device, dtype=torch.long).unsqueeze(0)  # (1, seq_len)
+
+                # call rotary_impl with the discovered signature
+                try:
+                    cos, sin = rotary_impl(x, position_ids)
+                except Exception as e:
+                    print("rotary_impl call failed:", repr(e))
+                    raise
+
+                # sanity checks
+                print("cos type/shape:", type(cos), getattr(cos, "shape", None))
+                print("sin type/shape:", type(sin), getattr(sin, "shape", None))
+                if cos is None or sin is None:
+                    raise RuntimeError("rotary_impl returned None for cos/sin")
+
+                # attention_mask: make it match model expectation (bool works for many versions)
+                attention_mask = torch.ones((1, seq_len), dtype=torch.bool, device=x.device)
+
+                # final call
+                outs[j] = layer(
+                    x,
+                    attention_mask=attention_mask,
+                    position_ids=position_ids,
+                    position_embeddings=(cos, sin)
+                )[0]
+                # --- patch end ---
+                # outs[j] = layer(inps[j].unsqueeze(0), attention_mask=attention_mask, position_ids=position_ids)[0]
         for h in handles:
             h.remove()
         self_attn_set = {key: subset[key] for key in subset if key.split(".")[0] == "self_attn"}
@@ -111,7 +148,44 @@ def lorap(args, model, tokenizer, device):
                 raise ValueError("Unknown mlp compression method")
         for j in range(args.nsamples):
             with torch.no_grad():
-                outs[j] = layer(inps[j].unsqueeze(0), attention_mask=attention_mask, position_ids=position_ids)[0]
+                rotary_impl = None
+                for m in model.modules():
+                    if hasattr(m, "rotary_emb"):
+                        rotary_impl = m.rotary_emb
+                        break
+                if rotary_impl is None:
+                    raise RuntimeError("rotary_impl not found on model")
+
+                # prepare tensors
+                x = inps[j].unsqueeze(0)                      # (1, seq_len, hidden)
+                seq_len = x.shape[1]
+                position_ids = torch.arange(seq_len, device=x.device, dtype=torch.long).unsqueeze(0)  # (1, seq_len)
+
+                # call rotary_impl with the discovered signature
+                try:
+                    cos, sin = rotary_impl(x, position_ids)
+                except Exception as e:
+                    print("rotary_impl call failed:", repr(e))
+                    raise
+
+                # sanity checks
+                print("cos type/shape:", type(cos), getattr(cos, "shape", None))
+                print("sin type/shape:", type(sin), getattr(sin, "shape", None))
+                if cos is None or sin is None:
+                    raise RuntimeError("rotary_impl returned None for cos/sin")
+
+                # attention_mask: make it match model expectation (bool works for many versions)
+                attention_mask = torch.ones((1, seq_len), dtype=torch.bool, device=x.device)
+
+                # final call
+                outs[j] = layer(
+                    x,
+                    attention_mask=attention_mask,
+                    position_ids=position_ids,
+                    position_embeddings=(cos, sin)
+                )[0]
+                # --- patch end ---
+                # outs[j] = layer(inps[j].unsqueeze(0), attention_mask=attention_mask, position_ids=position_ids)[0]
         inps, outs = outs, inps
     if "mlp" in args.sublayer:
         model.config.intermediate_size = model.model.layers[0].mlp.up_proj.weight.data.shape[0]
