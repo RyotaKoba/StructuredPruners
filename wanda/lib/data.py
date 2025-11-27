@@ -21,7 +21,7 @@ def get_wikitext2(nsamples, seed, seqlen, tokenizer):
     # Load train and test datasets
     # traindata = load_dataset('wikitext', 'wikitext-2-raw-v1', split='train')
     # testdata = load_dataset('wikitext', 'wikitext-2-raw-v1', split='test')
-    all_data = load_from_disk('../AFR-St/data_local/wiki_all')
+    all_data = load_from_disk('../../Structured_AFR/data_local/wiki_all')
     traindata = all_data['train']
     testdata = all_data['test']
 

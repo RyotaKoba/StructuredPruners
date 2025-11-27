@@ -23,7 +23,7 @@ def get_wikitext2_2(nsamples, seed, seqlen, tokenizer,mode="train"):
         trainloader = []
         # Load train and test datasets
         # traindata = load_dataset('wikitext', 'wikitext-2-raw-v1', split='train')
-        all_data = load_from_disk('../AFR-St/data_local/wiki_all')
+        all_data = load_from_disk('../../Structured_AFR/data_local/wiki_all')
         traindata = all_data['train']
         trainenc = tokenizer(" ".join(traindata['text']), return_tensors='pt')
         # Generate samples from training set
@@ -37,7 +37,7 @@ def get_wikitext2_2(nsamples, seed, seqlen, tokenizer,mode="train"):
         return trainloader, _
     if mode=="test":
         # testdata = load_dataset('wikitext', 'wikitext-2-raw-v1', split='test')
-        all_data = load_from_disk('../AFR-St/data_local/wiki_all')
+        all_data = load_from_disk('../../Structured_AFR/data_local/wiki_all')
         testdata = all_data['test']
         testenc = tokenizer("\n\n".join(testdata['text'][:-1]), return_tensors='pt')
         logger.info("test data load finished")
